@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory Game</title>
+<style>
+/* ... (CSS styles remain the same) */
+</style>
+</head>
+<body>
+
+<div class="game-board">
+</div>
+
+<script>
+const gameBoard = document.querySelector('.game-board');
+let cards = [];
+let flippedCards = [];
+let lockBoard = false;
+
+const images = [
+  "image1.png", "image1.png", "image2.png", "image2.png", "image3.png", "image3.png",
+  "image4.png", "image4.png", "image5.png", "image5.png", "image6.png", "image6.png",
+  "image7.png", "image7.png", "image8.png", "image8.png", "image9.png", "image9.png",
+  "image10.png", "image10.png", "image11.png", "image11.png", "image12.png", "image12.png",
+  "image13.png", "image13.png", "image14.png", "image14.png", "image15.png", "image15.png",
+  "image16.png", "image16.png", "image17.png", "image17.png", "image18.png", "image18.png",
+  "image19.png", "image19.png", "image20.png", "image20.png", "image21.png", "image21.png",
+  "image22.png", "image22.png", "image23.png", "image23.png", "image24.png", "image24.png",
+  "image25.png", "image25.png"
+];
+
+while (images.length < 50) {
+  const randomIndex = Math.floor(Math.random() * images.length);
+  images.push(images[randomIndex]);
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+const indices = Array.from(Array(50).keys());
+shuffle(indices);
+
+for (let i = 0; i < 50; i++) {
+  const cardIndex = indices[i]; // THIS IS THE KEY - use cardIndex consistently
+
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+  const cardInner = document.createElement('div');
+  cardInner.classList.add('card-inner');
+
+  const cardNumber = document.createElement('span');
+  cardNumber.classList.add('card-number');
+  cardNumber.textContent = cardIndex + 1; // Use cardIndex + 1 for the number
+  cardInner.appendChild(cardNumber);
+
+  const cardFront = document.createElement('div');
+  cardFront.classList.add('card-front');
+  cardInner.appendChild(cardFront);
+
+  const cardBack = document.createElement('div');
+  cardBack.classList.add('card-back');
+  const img = document.createElement('img');
+  img.src = images[cardIndex]; // Use cardIndex to get the image
+  img.alt = `Card ${cardIndex + 1}`; // Use cardIndex + 1 for alt text
+  cardBack.appendChild(img);
+  cardInner.appendChild(cardBack);
+
+  card.appendChild(cardInner);
+  gameBoard.appendChild(card);
+  cards.push(card);
+
+  card.addEventListener('click', flipCard);
+}
+
+// ... (rest of the flipCard, checkForMatch, resetFlippedCards functions remain the same)
+</script>
+
+</body>
+</html>
